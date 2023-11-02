@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/ui/components/drawer/drawer.dart';
-import 'package:news_app/ui/screens/home/tabs/news_tab/news_tab.dart';
+
+import '../../tabs/news_tab/news_tab.dart';
 
 class HomeScreen extends StatelessWidget {
   static const routeName = "home";

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/data/api/api_manager.dart';
-import 'package:news_app/data/model/SourcesResponse.dart';
+import 'package:news_app/data/model/sources_response.dart';
+import 'package:news_app/ui/components/loading.dart';
 import 'package:news_app/utils/app_colors.dart';
 import 'package:news_app/utils/app_theme.dart';
 
 import '../../../../../utils/app_asset.dart';
+import 'news_list.dart';
 
 class NewsTab extends StatefulWidget {
   @override
@@ -28,9 +30,7 @@ class _NewsTabState extends State<NewsTab> {
             } else if (snapshot.hasError) {
               return Text(snapshot.error.toString());
             } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const Loading();
             }
           }),
     );
@@ -42,7 +42,7 @@ class _NewsTabState extends State<NewsTab> {
       child: Column(
         children: [
           TabBar(
-            overlayColor: MaterialStatePropertyAll(AppColor.transparent),
+            overlayColor: const MaterialStatePropertyAll(AppColor.transparent),
             onTap: (index) {
               currentTabIndex = index;
               setState(() {});
@@ -57,9 +57,7 @@ class _NewsTabState extends State<NewsTab> {
           Expanded(
             child: TabBarView(
                 children: list
-                    .map((source) => Container(
-                          color: Colors.black,
-                        ))
+                    .map((source) => NewsList(sourceId: source.id!,))
                     .toList()),
           )
         ],
