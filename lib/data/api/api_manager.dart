@@ -10,13 +10,12 @@ abstract class ApiManager {
   static const String sourcesEndPoint = "/v2/top-headlines/sources";
   static const String articlesEndpoint = "/v2/everything";
 
-  static Future<List<Source>> getSources() async {
-    Uri url = Uri.parse("https://$baseUrl$sourcesEndPoint?apiKey=$apiKey");
+  static Future<List<Source>> getSources(String category) async {
+    Uri url = Uri.parse(
+        "https://$baseUrl$sourcesEndPoint?apiKey=$apiKey&category=$category");
     Response response = await get(url);
-    print(response.body);
     Map json = jsonDecode(response.body);
     SourcesResponse sourcesResponse = SourcesResponse.fromJson(json);
-    print(sourcesResponse.sources);
     if (response.statusCode >= 200 &&
         response.statusCode < 300 &&
         sourcesResponse.sources?.isNotEmpty == true) {
@@ -26,10 +25,8 @@ abstract class ApiManager {
   }
 
   static Future<List<Article>> getArticles(String sourceId) async {
-    Uri url = Uri.https(baseUrl, articlesEndpoint, {
-      "apiKey": apiKey,
-      "sources": sourceId
-    });
+    Uri url = Uri.https(
+        baseUrl, articlesEndpoint, {"apiKey": apiKey, "sources": sourceId});
     var serverResponse = await get(url);
     Map json = jsonDecode(serverResponse.body);
     ArticlesResponse articlesResponse = ArticlesResponse.fromJson(json);

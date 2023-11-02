@@ -5,6 +5,7 @@ abstract class AppColor {
   static const Color white = Colors.white;
   static const Color black = Colors.black;
   static const Color grey = Color.fromARGB(255, 78, 89, 105);
+  static const Color semiGrey = Color.fromARGB(92, 78, 89, 105);
   static const Color transparent = Colors.transparent;
   static const Color sportsBackGround =  Color.fromARGB(255, 199, 28, 35);
   static const Color politicsBackGround = Color.fromARGB(255, 0, 62, 144);

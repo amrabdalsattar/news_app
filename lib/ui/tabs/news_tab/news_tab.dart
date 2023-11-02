@@ -9,6 +9,9 @@ import '../../../../../utils/app_asset.dart';
 import 'news_list.dart';
 
 class NewsTab extends StatefulWidget {
+  final String categoryId;
+  const NewsTab(this.categoryId, {super.key});
+
   @override
   State<NewsTab> createState() => _NewsTabState();
 }
@@ -23,7 +26,7 @@ class _NewsTabState extends State<NewsTab> {
           image: DecorationImage(
               image: AssetImage(AppAsset.backGround), fit: BoxFit.cover)),
       child: FutureBuilder(
-          future: ApiManager.getSources(),
+          future: ApiManager.getSources(widget.categoryId),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return buildTab(snapshot.data!);
