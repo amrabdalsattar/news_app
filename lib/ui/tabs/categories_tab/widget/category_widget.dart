@@ -24,7 +24,7 @@ class CategoryWidget extends StatelessWidget {
       child: Center(
         child: Column(
           children: [
-            Spacer(),
+            const Spacer(),
             Image.asset(categoryModel.imagePath, height: MediaQuery.of(context).size.height * 0.14,),
             Expanded(
               child: Text(
@@ -33,7 +33,7 @@ class CategoryWidget extends StatelessWidget {
               ),
 
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       ),
