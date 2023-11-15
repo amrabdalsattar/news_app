@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/data/model/category_model.dart';
+import 'package:news_app/ui/screens/news_search_page.dart';
 import 'package:news_app/ui/tabs/categories_tab/categories_tab.dart';
 import 'package:news_app/ui/tabs/settings_tab/settings_tab.dart';
 
@@ -41,6 +42,11 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           title: const Text("News App"),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          actions: [
+            IconButton(onPressed: (){
+              showSearch(context: context, delegate: NewsSearchPage());
+            }, icon: Icon(Icons.search))
+          ],
         ),
         body: currentTab,
         drawer: buildDrawer(),
