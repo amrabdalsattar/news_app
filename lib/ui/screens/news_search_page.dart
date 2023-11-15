@@ -45,6 +45,7 @@ class NewsSearchPage extends SearchDelegate{
     return IconButton(onPressed: (){
       Navigator.pop(context);
     }, icon: Icon(Icons.close));
+
   }
 
   @override
