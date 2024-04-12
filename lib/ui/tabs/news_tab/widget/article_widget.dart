@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/data/model/articles_response.dart';
-import 'package:news_app/ui/components/loading.dart';
 import 'package:news_app/ui/screens/details_screen/details_screen.dart';
+import 'package:news_app/ui/tabs/news_tab/widget/article_shimmer.dart';
 import 'package:news_app/utils/app_colors.dart';
 import 'package:news_app/utils/app_theme.dart';
+
+import '../../../../utils/functions.dart';
 
 class ArticleWidget extends StatelessWidget {
   final Article article;
@@ -20,28 +22,26 @@ class ArticleWidget extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              end: Alignment.bottomCenter,
-              begin: Alignment.topCenter,
-              stops: [0.0, (100 - 56) / 100],
-              colors: [AppColor.transparent, AppColor.white],
-            ),
+            color: AppColor.white,
             borderRadius: BorderRadius.circular(8)),
         margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+        padding: EdgeInsets.only(top: 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(22),
-              child: CachedNetworkImage(
-                  imageUrl: article.urlToImage!,
-                  placeholder: (_, __) => const Loading(),
-                  errorWidget: (_, __, ___) => const Icon(Icons.error),
-                  height:
-                      MediaQuery.of(context).size.height * 0.2609427609427609),
+            Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: CachedNetworkImage(
+                    imageUrl: article.urlToImage??"",
+                    placeholder: (_, __) => const ArticleShimmer(),
+                    errorWidget: (_, __, ___) => const Icon(Icons.error),
+                  width: MediaQuery.of(context).size.width * 0.85,
+                    ),
+              ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 4),
+              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 4, top: 8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -51,7 +51,7 @@ class ArticleWidget extends StatelessWidget {
                   Text(article.title ?? "",
                       style: AppTheme.appTheme.textTheme.bodyLarge),
                   const SizedBox(height: 4,),
-                  Text(article.publishedAt ?? "",
+                  Text(formatTimeAgo(DateTime.parse(article.publishedAt!)),
                       textAlign: TextAlign.end,
                       style: AppTheme.appTheme.textTheme.bodyMedium!.copyWith(color: AppColor.semiGrey)),
                 ],
@@ -63,3 +63,5 @@ class ArticleWidget extends StatelessWidget {
     );
   }
 }
+
+

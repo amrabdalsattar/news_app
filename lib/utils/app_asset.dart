@@ -10,4 +10,5 @@ abstract class AppAsset{
   static const String backGround = "assets/images/back_ground.png";
   static const String categoriesIcon = "assets/images/category_icon.png";
   static const String settingsIcon = "assets/images/settings_icon.png";
+  static const String searchNotFound = "assets/images/searchNotFound.png";
 }

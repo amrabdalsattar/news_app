@@ -4,13 +4,13 @@ import 'package:http/http.dart';
 import 'package:news_app/data/model/articles_response.dart';
 import 'package:news_app/data/model/sources_response.dart';
 
-abstract class ApiManager {
+class OnlineDataSource {
   static const String apiKey = "b27f46a1e4ac4bf09ef21f6fc7e5f83d";
   static const String baseUrl = "newsapi.org";
   static const String sourcesEndPoint = "/v2/top-headlines/sources";
   static const String articlesEndpoint = "/v2/everything";
 
-  static Future<List<Source>> getSources(String category) async {
+  Future<SourcesResponse> getSources(String category) async {
     Uri url = Uri.parse(
         "https://$baseUrl$sourcesEndPoint?apiKey=$apiKey&category=$category");
     Response response = await get(url);
@@ -19,12 +19,12 @@ abstract class ApiManager {
     if (response.statusCode >= 200 &&
         response.statusCode < 300 &&
         sourcesResponse.sources?.isNotEmpty == true) {
-      return sourcesResponse.sources!;
+      return sourcesResponse;
     }
     throw Exception(sourcesResponse.message);
   }
 
-  static Future<List<Article>> getArticles(String sourceId) async {
+  Future<List<Article>> getArticles(String sourceId) async {
     Uri url = Uri.https(
         baseUrl, articlesEndpoint, {"apiKey": apiKey, "sources": sourceId});
     var serverResponse = await get(url);
@@ -38,9 +38,8 @@ abstract class ApiManager {
     throw Exception("Something Went Wrong, Please Try Again");
   }
 
-  static Future<List<Article>> search(String q) async {
-    Uri url = Uri.https(
-        baseUrl, articlesEndpoint, {"apiKey": apiKey, "q": q});
+  Future<List<Article>> search(String q) async {
+    Uri url = Uri.https(baseUrl, articlesEndpoint, {"apiKey": apiKey, "q": q});
     var serverResponse = await get(url);
     Map json = jsonDecode(serverResponse.body);
     ArticlesResponse articlesResponse = ArticlesResponse.fromJson(json);

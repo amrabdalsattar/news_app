@@ -9,19 +9,19 @@ class WebViewPage extends StatefulWidget {
   State<WebViewPage> createState() => _WebViewPageState();
 }
 class _WebViewPageState extends State<WebViewPage> {
-  var controller = WebViewController();
+  final _controller = WebViewController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    controller.loadRequest(Uri.parse(widget.url));
+    _controller.loadRequest(Uri.parse(widget.url));
   }
 
   @override
   Widget build(BuildContext context) { 
     return Scaffold(
-      body: WebViewWidget(controller: controller),
+      body: WebViewWidget(controller: _controller),
     );
   }
 }

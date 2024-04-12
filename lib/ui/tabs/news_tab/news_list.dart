@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/data/api/api_manager.dart';
 import 'package:news_app/data/model/articles_response.dart';
 import 'package:news_app/ui/tabs/news_tab/widget/article_widget.dart';
 import 'package:news_app/ui/components/error_view.dart';
 import 'package:news_app/ui/components/loading.dart';
 
+import '../../../data/repos/news_repo/data_sources/online_datasource.dart';
 
 class NewsList extends StatelessWidget {
   final String sourceId;
@@ -14,7 +14,7 @@ class NewsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: ApiManager.getArticles(sourceId),
+        future: OnlineDataSource().getArticles(sourceId),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return buildArticlesListView(snapshot.data!);

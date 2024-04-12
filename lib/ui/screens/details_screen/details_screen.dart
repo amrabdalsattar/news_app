@@ -6,6 +6,7 @@ import 'package:news_app/ui/screens/web_view.dart';
 import '../../../utils/app_asset.dart';
 import '../../../utils/app_colors.dart';
 import '../../../utils/app_theme.dart';
+import '../../../utils/functions.dart';
 import '../../components/loading.dart';
 
 class DetailsScreen extends StatelessWidget {
@@ -54,7 +55,8 @@ class DetailsScreen extends StatelessWidget {
                   const SizedBox(
                     height: 4,
                   ),
-                  Text(article.publishedAt ?? "",
+
+                  Text(formatTimeAgo(DateTime.parse(article.publishedAt!),),
                       textAlign: TextAlign.end,
                       style: AppTheme.appTheme.textTheme.bodyMedium!
                           .copyWith(color: AppColor.semiGrey)),
@@ -85,14 +87,14 @@ class DetailsScreen extends StatelessWidget {
                           MaterialPageRoute(
                               builder: (context) => WebViewPage(url: article.url!,)));
                     },
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        const Text(
+                        Text(
                           "View Full Article",
-                          style: TextStyle(fontSize: 14),
+                          style: TextStyle(fontSize: 14, color: AppColor.webViewRouterColor),
                         ),
-                        Icon(Icons.arrow_forward, size: 18,)
+                        Icon(Icons.arrow_right, size: 25, color: AppColor.webViewRouterColor,)
                       ],
                     ),
                   )

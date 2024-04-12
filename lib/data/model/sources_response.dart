@@ -13,7 +13,7 @@ class SourcesResponse {
     this.message
   });
 
-  SourcesResponse.fromJson(Map json) {
+  SourcesResponse.fromJson(dynamic json) {
     status = json['status'];
     code = json['code'];
     message = json['message'];
