@@ -24,20 +24,6 @@ class OnlineDataSource {
     throw Exception(sourcesResponse.message);
   }
 
-  Future<List<Article>> getArticles(String sourceId) async {
-    Uri url = Uri.https(
-        baseUrl, articlesEndpoint, {"apiKey": apiKey, "sources": sourceId});
-    var serverResponse = await get(url);
-    Map json = jsonDecode(serverResponse.body);
-    ArticlesResponse articlesResponse = ArticlesResponse.fromJson(json);
-    if (serverResponse.statusCode >= 200 &&
-        serverResponse.statusCode < 300 &&
-        articlesResponse.articles?.isNotEmpty == true) {
-      return articlesResponse.articles!;
-    }
-    throw Exception("Something Went Wrong, Please Try Again");
-  }
-
   Future<List<Article>> search(String q) async {
     Uri url = Uri.https(baseUrl, articlesEndpoint, {"apiKey": apiKey, "q": q});
     var serverResponse = await get(url);

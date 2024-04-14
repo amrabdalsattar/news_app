@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:news_app/data/repos/news_repo/data_sources/offline_datasource.dart';
-import 'package:news_app/data/repos/news_repo/news_repo.dart';
+import 'package:news_app/data/repos/news_repo/data_sources/source_tabs_offline_datasource.dart';
+import 'package:news_app/data/repos/news_repo/source_tabs_repo.dart';
 
 import '../../data/model/sources_response.dart';
-import '../../data/repos/news_repo/data_sources/online_datasource.dart';
+import '../../data/repos/news_repo/data_sources/source_tabs_online_datasource.dart';
 
 class SourcesViewModel extends ChangeNotifier {
   List<Source> sources = [];

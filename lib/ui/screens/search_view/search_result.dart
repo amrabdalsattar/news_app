@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/ui/screens/search_view/search_errors.dart';
 
-import '../../../data/repos/news_repo/data_sources/online_datasource.dart';
+import '../../../data/repos/news_repo/data_sources/source_tabs_online_datasource.dart';
 import '../../components/error_view.dart';
 import '../../components/loading.dart';
 import '../../tabs/news_tab/widget/article_widget.dart';

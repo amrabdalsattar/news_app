@@ -24,6 +24,7 @@ class _NewsTabState extends State<NewsTab> {
 
   @override
   void initState() {
+    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       viewModel.getSources(widget.categoryId);
     });

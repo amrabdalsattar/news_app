@@ -25,7 +25,7 @@ class ArticleWidget extends StatelessWidget {
             color: AppColor.white,
             borderRadius: BorderRadius.circular(8)),
         margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-        padding: EdgeInsets.only(top: 5),
+        padding: const EdgeInsets.only(top: 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
