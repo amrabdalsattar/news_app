@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/data/model/articles_response.dart';
-import 'package:news_app/ui/tabs/news_tab/widget/article_widget.dart';
 import 'package:news_app/ui/components/error_view.dart';
 import 'package:news_app/ui/components/loading.dart';
-import 'package:news_app/utils/providers/articles_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:news_app/ui/tabs/news_tab/widget/article_widget.dart';
+
+import '../../../utils/view_models/articles_provider.dart';
 
 class NewsList extends StatefulWidget {
   final String sourceId;
@@ -28,28 +29,26 @@ class _NewsListState extends State<NewsList> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => viewModel,
-      child: Consumer<ArticlesViewModel>(
-        builder:
-            (_,viewModel,__) {
-          Widget articleContent;
-          if(viewModel.isLoading){
-            articleContent = const Loading();
-          }else if(viewModel.articles.isNotEmpty){
-            articleContent = buildArticlesListView(viewModel.articles);
-          }else{
-            articleContent = ErrorView(message: viewModel.errorMessage);
-          }
-          return articleContent;
-            },
-      ),
+    return BlocBuilder<ArticlesViewModel, ArticlesStates>(
+      bloc: viewModel,
+      builder: (_, state) {
+        Widget articleContent;
+        if (state is ArticleLoading) {
+          articleContent = const Loading();
+        } else if (state is ArticleSuccess) {
+          articleContent = buildArticlesListView(state.articles);
+        } else {
+          state as ArticleError;
+          articleContent = ErrorView(message: state.errorMessage);
+        }
+        return articleContent;
+      },
     );
   }
 
   Widget buildArticlesListView(List<Article> articles) {
     return ListView.builder(
-      physics: const BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         itemCount: articles.length,
         itemBuilder: (context, index) =>
             ArticleWidget(article: articles[index]));

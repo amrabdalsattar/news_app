@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/data/model/sources_response.dart';
 import 'package:news_app/ui/components/error_view.dart';
 import 'package:news_app/ui/components/loading.dart';
 import 'package:news_app/utils/app_colors.dart';
 import 'package:news_app/utils/app_theme.dart';
-import 'package:news_app/utils/providers/sources_provider.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../../utils/app_asset.dart';
+import '../../../utils/view_models/sources_provider.dart';
 import 'news_list.dart';
 
 class NewsTab extends StatefulWidget {
@@ -38,21 +38,20 @@ class _NewsTabState extends State<NewsTab> {
       decoration: const BoxDecoration(
           image: DecorationImage(
               image: AssetImage(AppAsset.backGround), fit: BoxFit.cover)),
-      child: ChangeNotifierProvider(
-        create: (_) => viewModel,
-        child: Consumer<SourcesViewModel>(
-          builder: (_, viewModel, __) {
-            Widget content;
-            if(viewModel.isLoading){
-              content = const Loading();
-            }else if(viewModel.sources.isNotEmpty){
-              content = buildTab(viewModel.sources);
-            }else{
-              content = ErrorView(message: viewModel.errorMessage??"Something went wrong");
-            }
-            return content;
-          },
-        ),
+      child: BlocBuilder<SourcesViewModel, SourcesTabsStates>(
+        bloc: viewModel,
+        builder: (_, state) {
+          Widget content;
+          if (state is SourcesTabsLoading) {
+            content = const Loading();
+          } else if (state is SourcesTabsSuccess) {
+            content = buildTab(state.sources);
+          } else {
+            state as SourcesTabsError;
+            content = ErrorView(message: state.errorMessage);
+          }
+          return content;
+        },
       ),
     );
   }
